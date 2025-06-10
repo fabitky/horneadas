@@ -1,4 +1,4 @@
-const CACHE_NAME = "horneadas-v1";
+const CACHE_NAME = "horneadas";
 
 self.addEventListener("install", event => {
   event.waitUntil(
