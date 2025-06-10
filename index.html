@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Horneadas</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- SECCIÓN: DATOS DE HORNEADA -->
+    <section class="panel" id="panelHornada">
+      <h2>Datos de la hornada</h2>
+      <form id="formHornada" autocomplete="off">
+        <div class="form-row">
+          <input name="nombreHornada" type="text" placeholder="Nombre o código" required>
+          <input name="fechaHornada" type="date" required>
+          <input name="horaInicio" type="time" required>
+        </div>
+        <div class="form-row">
+          <input name="tipoHorneada" type="text" placeholder="Tipo de horneada">
+          <label>
+            Tipo de leña
+            <span class="help" title="Ejemplo: eucalipto, pino, quebracho">?</span>
+            <input name="tipoLenia" type="text" placeholder="Tipo de leña">
+          </label>
+        </div>
+        <div class="form-row">
+          <textarea name="notas" rows="2" placeholder="Notas..."></textarea>
+          <label><input name="curvaIdeal" type="checkbox"> Curva ideal
+            <span class="help" title="Marca si esta hornada debe usarse como referencia para comparar">?</span>
+          </label>
+        </div>
+        <div class="form-row">
+          <button type="submit">Guardar hornada</button>
+          <button type="button" id="nuevaHornadaBtn">Nueva hornada</button>
+          <button type="button" id="gestionarBtn">Gestionar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- SECCIÓN: REGISTRO DE TEMPERATURAS -->
+    <section class="panel" id="panelRegistroTemp">
+      <h2>Registro de temperaturas</h2>
+      <form id="formDato" autocomplete="off">
+        <div class="form-row">
+          <input name="horaRegistro" type="time" required>
+          <input name="tempActual" type="number" placeholder="Temperatura (°C)" min="0" step="1" required>
+          <input name="nota" type="text" placeholder="Nota">
+        </div>
+        <div class="form-row">
+          <button type="submit">Registrar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- SECCIÓN: TABLA Y GRÁFICO -->
+    <section class="panel" id="panelTablaGrafico">
+      <h2>Registros y gráfico</h2>
+      <div id="vacío" class="vacio-panel" style="display:none;">
+        <p>¡Aún no tienes registros! Haz clic en <b>Registrar</b> para comenzar.</p>
+      </div>
+      <div class="tabla-grafico-flex">
+        <div class="tabla-wrap">
+          <table id="tablaDatos">
+            <thead>
+              <tr>
+                <th>Hora</th>
+                <th>Temp (°C)</th>
+                <th>Nota</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="grafico-wrap">
+          <div id="loader" class="loader" style="display:none;"></div>
+          <canvas id="chartCanvas" width="380" height="260"></canvas>
+        </div>
+      </div>
+      <div class="panel-actions">
+        <button id="informeBtn">Informe PDF/Imprimir</button>
+        <button id="compararBtn">Comparar curvas</button>
+        <button id="limpiarComparacionBtn" style="display:none;">Limpiar comparación</button>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: IMPORTAR/EXPORTAR -->
+    <section class="panel" id="panelOpciones">
+      <h2>Opciones de importar/exportar</h2>
+      <div class="import-export-row">
+        <button id="exportarJSON">Exportar JSON</button>
+        <button id="exportarCSV">Exportar CSV</button>
+        <button id="exportarExcel">Exportar Excel</button>
+        <label class="importarLabel">
+          Importar JSON
+          <input type="file" id="importarArchivo" accept=".json" style="display:none;">
+        </label>
+      </div>
+      <div class="panel-actions">
+        <button id="ajustesBtn">Ajustes</button>
+        <button id="ayudaBtn" title="Ayuda rápida sobre la app">?</button>
+      </div>
+    </section>
+
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <!-- Modal Gestionar Hornadas -->
+  <div id="modalGestion" class="modal" hidden>
+    <div class="modal-content">
+      <h2>Gestionar hornadas</h2>
+      <ul id="listaHornadas"></ul>
+      <button type="button" onclick="closeModal('modalGestion')">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Modal comparar curvas -->
+  <div id="modalComparar" class="modal" hidden>
+    <div class="modal-content">
+      <h2>Seleccionar curvas a comparar</h2>
+      <form id="formComparar">
+        <ul id="listaHornadasComparar" style="max-height:200px;overflow:auto;margin-bottom:1em;"></ul>
+        <button type="submit">Comparar</button>
+        <button type="button" onclick="closeModal('modalComparar')">Cancelar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de ayuda contextual -->
+  <div id="modalAyuda" class="modal" hidden>
+    <div class="modal-content ayuda-contenido">
+      <h2>¿Cómo funciona esta app?</h2>
+      <ul>
+        <li><b>Datos de hornada</b>: Completa y guarda la información de tu hornada.</li>
+        <li><b>Registro de temperaturas</b>: Ingresa cada medición con su hora, temperatura y nota opcional.</li>
+        <li><b>Gestionar</b>: Accede a todas tus hornadas guardadas para cargar, editar o eliminar.</li>
+        <li><b>Exportar/importar</b>: Guarda o recupera tus datos en varios formatos.</li>
+        <li><b>Comparar curvas</b>: Visualiza la evolución de distintas hornadas.</li>
+        <li>Puedes <b>deshacer</b> al borrar un registro, y si necesitas más ayuda, pasa el mouse sobre los <span class="help">?</span>.</li>
+      </ul>
+      <button type="button" onclick="closeModal('modalAyuda')">Cerrar</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.2/dist/dexie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
