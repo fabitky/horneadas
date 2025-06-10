@@ -2,9 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Gestión de Horneadas</title>
+  <title>Gestor de Horneadas</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1976d2">
+  <link rel="icon" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
   <div class="container">
@@ -144,8 +148,61 @@
     </div>
   </div>
 
+  <!-- Modal Ajustes -->
+  <div id="modalAjustes" class="modal" hidden>
+    <div class="modal-content">
+      <h2>Ajustes</h2>
+      <form id="formAjustes">
+        <label>
+          <input type="checkbox" name="temaOscuro">
+          Tema oscuro
+        </label>
+        <label>
+          <input type="checkbox" name="mostrarNotas" checked>
+          Mostrar notas en tabla
+        </label>
+        <label>
+          <input type="checkbox" name="recordarUltima" checked>
+          Recordar última hornada
+        </label>
+        <button type="button" onclick="guardarAjustes()">Guardar</button>
+        <button type="button" onclick="closeModal('modalAjustes')">Cerrar</button>
+      </form>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.2/dist/dexie.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
   <script src="script.js"></script>
+  <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(() => {
+    // Service worker registrado correctamente
+  }).catch(err => {
+    console.log('Error registrando service worker:', err);
+  });
+}
+    // Ajustes modal
+    document.getElementById("ajustesBtn").onclick = () => {
+      const ajustes = JSON.parse(localStorage.getItem('ajustesApp') || '{}');
+      document.querySelector("#formAjustes [name='temaOscuro']").checked = ajustes.temaOscuro || false;
+      document.querySelector("#formAjustes [name='mostrarNotas']").checked = ajustes.mostrarNotas !== false;
+      document.querySelector("#formAjustes [name='recordarUltima']").checked = ajustes.recordarUltima !== false;
+      openModal('modalAjustes');
+    };
+    window.guardarAjustes = () => {
+      const form = document.getElementById("formAjustes");
+      const ajustes = {
+        temaOscuro: form.temaOscuro.checked,
+        mostrarNotas: form.mostrarNotas.checked,
+        recordarUltima: form.recordarUltima.checked,
+      };
+      localStorage.setItem('ajustesApp', JSON.stringify(ajustes));
+      closeModal('modalAjustes');
+      // Aquí podrías aplicar cambios inmediatos (tema, tabla, etc)
+      document.body.classList.toggle('tema-oscuro', ajustes.temaOscuro);
+      showToast("Ajustes guardados.");
+    };
+  </script>
 </body>
 </html>
