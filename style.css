@@ -276,14 +276,3 @@ button[disabled] {
     justify-content: flex-start;
   }
 }
-@media (max-width: 600px) {
-  .form-row {
-    flex-direction: column;
-    gap: .4em;
-  }
-  .import-export-row {
-    flex-direction: column;
-    gap: .4em;
-  }
-  .modal-content { padding: 1em 0.4em 1em 0.4em; min-width: 0; }
-}
