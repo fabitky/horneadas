@@ -287,3 +287,10 @@ button[disabled] {
   }
   .modal-content { padding: 1em 0.4em 1em 0.4em; min-width: 0; }
 }
+@media (max-width: 600px) {
+  button, .importarLabel {
+    font-size: 0.87em;
+    padding: 0.36em 0.8em;
+    border-radius: 4px;
+  }
+}
