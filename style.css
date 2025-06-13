@@ -257,22 +257,3 @@ button[disabled] {
   border-bottom: 1px dotted #1976d2;
   margin-left: .2em;
 }
-
-@media (max-width: 980px) {
-  .container {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0.5rem;
-  }
-  .panel {
-    max-width: 100%;
-    margin: 0 auto;
-  }
-  .tabla-grafico-flex {
-    flex-direction: column;
-    gap: 1.2em;
-  }
-  .grafico-wrap {
-    justify-content: flex-start;
-  }
-}
