@@ -212,5 +212,12 @@ if ('serviceWorker' in navigator) {
       showToast("Ajustes guardados.");
     };
   </script>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      document.getElementById('splash-screen').style.display = 'none';
+    }, 2000);
+  });
+</script>
 </body>
 </html>
