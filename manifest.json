@@ -16,6 +16,11 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ],
   "description": "Registro y comparación de curvas de hornadas de leña."
 }
