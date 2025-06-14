@@ -289,10 +289,3 @@ button[disabled] {
   height: auto;
   margin-bottom: 8px;
 }
-
-.splash-company {
-  color: #888;
-  font-size: 1rem;
-  letter-spacing: 2px;
-  text-transform: lowercase;
-}
