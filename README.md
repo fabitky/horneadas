@@ -1,7 +1,7 @@
 # Gestor de Horneadas
 
 Aplicación web ligera para registrar, visualizar y comparar curvas de temperatura de hornadas de leña.  
-Pensada para panaderos, ceramistas, pizzeros y cualquier persona que utiliza hornos de leña y quiere llevar control histórico y visual de sus procesos.
+Pensada para ceramistas que quieren llevar control histórico y visual de sus procesos.
 
 ---
 
