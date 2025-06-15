@@ -221,33 +221,53 @@ if ('serviceWorker' in navigator) {
   });
 </script>
 <script>
+<script>
 function mostrarSeccion(hash) {
   const map = {
     '#horneada': 'panelHornada',
     '#temperaturas': 'panelRegistroTemp',
-    '#graficos': 'panelTablaGrafico', 
+    '#graficos': 'panelTablaGrafico',
     '#opciones': 'panelOpciones'
   };
+  // Oculta todos los paneles de forma segura
   Object.values(map).forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
+  // Muestra el panel correcto
   const idMostrar = map[hash] || 'panelHornada';
   const seccion = document.getElementById(idMostrar);
   if (seccion) seccion.style.display = '';
   // Resalta el link activo
-  document.querySelectorAll('.main-nav a').forEach(link => {
-    link.classList.remove('active');
+  document.querySelectorAll('.main-nav');
   });
   if (hash && document.querySelector('.main-nav a[href="' + hash + '"]')) {
     document.querySelector('.main-nav a[href="' + hash + '"]').classList.add('active');
   } else {
-    document.getElementById('link-horneada').classList.add('active');
+    const homeLink = document.getElementById('link-horneada');
+    if (homeLink) homeLink.classList.add('active');
   }
 }
-window.addEventListener('hashchange', () => {
+
+// Splash + navegación
+window.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    const splash = document.getElementById('splash-screen');
+    if (splash) splash.style.display = 'none';
+    mostrarSeccion(window.location.hash);
+  }, 5000);
+});
+
+// Cambia la sección al cambiar el hash
+window.addEventListener('hashchange', function() {
   mostrarSeccion(window.location.hash);
 });
+
+// Si recargas o entras directo a una sección, muestra la correcta si el splash ya no está
+if (document.readyState === "complete") {
+  mostrarSeccion(window.location.hash);
+}
+</script>
 </script>
 </body>
 </html>
