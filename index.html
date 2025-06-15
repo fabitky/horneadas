@@ -21,6 +21,7 @@
  <nav class="main-nav">
     <a href="#horneada" id="link-horneada">Datos de Horneada</a>
     <a href="#temperaturas" id="link-temperaturas">Registro de Temperaturas</a>
+    <a href="#graficos" id="link-graficos">Gráficos y Registros</a> 
     <a href="#opciones" id="link-opciones">Importar/Exportar</a>
   </nav>
   <div class="container">
@@ -223,6 +224,7 @@ function mostrarSeccion(hash) {
   const map = {
     '#horneada': 'panelHornada',
     '#temperaturas': 'panelRegistroTemp',
+    '#graficos': 'panelTablaGraficos', 
     '#opciones': 'panelOpciones'
   };
   Object.values(map).forEach(id => {
