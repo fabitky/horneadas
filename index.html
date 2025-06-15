@@ -213,55 +213,44 @@ if ('serviceWorker' in navigator) {
     };
   </script>
 <script>
-(function() {
-  // Asegura que solo se ejecute cuando el DOM ya está listo
-  function mostrarSeccion(hash) {
-    const map = {
-      '#horneada': 'panelHornada',
-      '#temperaturas': 'panelRegistroTemp',
-      '#graficos': 'panelTablaGrafico',
-      '#opciones': 'panelOpciones'
-    };
-    // Oculta todos los paneles de forma segura
-    Object.values(map).forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
-    // Muestra el panel correcto
-    const idMostrar = map[hash] || 'panelHornada';
-    const seccion = document.getElementById(idMostrar);
-    if (seccion) seccion.style.display = '';
-    // Resalta el link activo
-    document.querySelectorAll('.main-nav a').forEach(link => {
-      link.classList.remove-nav a[href="' + hash + '"]')) {
-      document.querySelector('.main-nav a[href="' + hash + '"]').classList.add('active');
-    } else {
-      const homeLink = document.getElementById('link-horneada');
-      if (homeLink) homeLink.classList.add('active');
-    }
-  }
-
-  window.mostrarSeccion = mostrarSeccion; // la hace disponible globalmente por si la necesitas en consola
-
-  // Splash + navegación
-  window.addEventListener('DOMContentLoaded', function() {
-    setTimeout(function() {
-      var splash = document.getElementById('splash-screen');
-      if (splash) splash.style.display = 'none';
-      mostrarSeccion(window.location.hash);
-    }, 5000);
+function mostrarSeccion(hash) {
+  const map = {
+    '#horneada': 'panelHornada',
+    '#temperaturas': 'panelRegistroTemp',
+    '#graficos': 'panelTablaGrafico',
+    '#opciones': 'panelOpciones'
+  };
+  Object.values(map).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('oculto');
   });
-
-  // Cambia la sección al cambiar el hash
-  window.addEventListener('hashchange', function() {
-    mostrarSeccion(window.location.hash);
+  const idMostrar = map[hash] || 'panelHornada';
+  const seccion = document.getElementById(idMostrar);
+  if (seccion) seccion.classList.remove('oculto');
+  // Resalta el link activo
+  document.querySelectorAll('.main-nav a').forEach(link => {
+    link.classList.remove('active');
   });
-
-  // Si el DOM ya está listo (al recargar y sin splash)
-  if (document.readyState === "complete") {
-    mostrarSeccion(window.location.hash);
+  if (hash && document.querySelector('.main-nav a[href="' + hash + '"]')) {
+    document.querySelector('.main-nav a[href="' + hash + '"]').classList.add('active');
+  } else {
+    const homeLink = document.getElementById('link-horneada');
+    if (homeLink) homeLink.classList.add('active');
   }
-})();
-</script>
+}
+
+// Splash + navegación
+window.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    var splash = document.getElementById('splash-screen');
+    if (splash) splash.style.display = 'none';
+    mostrarSeccion(window.location.hash);
+  }, 5000);
+});
+
+window.addEventListener('hashchange', function() {
+  mostrarSeccion(window.location.hash);
+});
+</script> 
 </body>
 </html>
