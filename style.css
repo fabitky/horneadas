@@ -329,7 +329,4 @@ button[disabled] {
     font-size: 1.1em;
   }
 }
-
-/* Oculta todas las secciones panel por defecto */
-.panel { display: none; }
-#panelHornada { display: block !important; }
+.oculto { display: none !important; } 
