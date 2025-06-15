@@ -218,5 +218,36 @@ if ('serviceWorker' in navigator) {
     }, 5000);
   });
 </script>
+<script>
+function mostrarSeccion(hash) {
+  const map = {
+    '#horneada': 'panelHornada',
+    '#temperaturas': 'panelRegistroTemp',
+    '#opciones': 'panelOpciones'
+  };
+  Object.values(map).forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+  const idMostrar = map[hash] || 'panelHornada';
+  document.getElementById(idMostrar).style.display = '';
+
+  // Resalta el link activo
+  document.querySelectorAll('.main-nav a').forEach(link => {
+    link.classList.remove('active');
+  });
+  if (hash && document.querySelector('.main-nav a[href="' + hash + '"]')) {
+    document.querySelector('.main-nav a[href="' + hash + '"]').classList.add('active');
+  } else {
+    document.getElementById('link-horneada').classList.add('active');
+  }
+}
+
+window.addEventListener('hashchange', () => {
+  mostrarSeccion(window.location.hash);
+});
+window.addEventListener('DOMContentLoaded', () => {
+  mostrarSeccion(window.location.hash);
+});
+</script>
 </body>
 </html>
