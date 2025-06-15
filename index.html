@@ -225,7 +225,7 @@ function mostrarSeccion(hash) {
   const map = {
     '#horneada': 'panelHornada',
     '#temperaturas': 'panelRegistroTemp',
-    '#graficos': 'panelTablaGrafico', 
+    '#graficos': 'panelTablaGrafico',
     '#opciones': 'panelOpciones'
   };
   Object.values(map).forEach(id => {
@@ -236,16 +236,12 @@ function mostrarSeccion(hash) {
   const seccion = document.getElementById(idMostrar);
   if (seccion) seccion.style.display = '';
   // Resalta el link activo
-  document.querySelectorAll('.main-nav a').forEach(link => {
-    link.classList.remove('active');
-  });
-  if (hash && document.querySelector('.main-nav a[href="' + hash + '"]')) {
+  document.querySelector"]')) {
     document.querySelector('.main-nav a[href="' + hash + '"]').classList.add('active');
   } else {
     document.getElementById('link-horneada').classList.add('active');
   }
 }
-
 window.addEventListener('hashchange', () => {
   mostrarSeccion(window.location.hash);
 });
