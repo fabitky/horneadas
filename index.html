@@ -229,11 +229,12 @@ function mostrarSeccion(hash) {
     '#opciones': 'panelOpciones'
   };
   Object.values(map).forEach(id => {
-    document.getElementById(id).style.display = 'none';
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
   });
   const idMostrar = map[hash] || 'panelHornada';
-  document.getElementById(idMostrar).style.display = '';
-
+  const seccion = document.getElementById(idMostrar);
+  if (seccion) seccion.style.display = '';
   // Resalta el link activo
   document.querySelectorAll('.main-nav a').forEach(link => {
     link.classList.remove('active');
