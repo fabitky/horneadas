@@ -330,19 +330,45 @@ button[disabled] {
   }
 }
 .oculto { display: none !important; }
+.main-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;   /* Centra los iconos horizontalmente */
+  align-items: center;
+  background-color: #388e3c; /* Fondo verde fuerte */
+  padding: 0.5em 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  gap: 0.5em;                /* Espacio entre iconos */
+  /* Si quieres menos separación, reduce gap */
+}
+
 .main-nav a {
   font-size: 1.6em;
-  padding: 0.7em 1em;
+  padding: 0.7em 0.7em;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
 }
 .main-nav a svg {
   display: block;
+  stroke: #43a047;           /* Verde medio por defecto */
   transition: stroke 0.3s;
+}
+.main-nav a:nth-child(2) svg { stroke: #388e3c; } /* Termómetro */
+.main-nav a:nth-child(3) svg { stroke: #2e7d32; } /* Gráfico */
+.main-nav a:nth-child(4) svg { stroke: #43a047; } /* Guardar */
+
+.main-nav a.active,
+.main-nav a:active,
+.main-nav a:focus {
+  background: #66bb6a; /* Verde claro para el fondo activo */
 }
 .main-nav a.active svg,
 .main-nav a:active svg,
 .main-nav a:focus svg {
-  stroke: #66bb6a !important; /* Verde más claro para el activo */
+  stroke: #1b5e20 !important; /* Verde oscuro para el icono activo */
 }
