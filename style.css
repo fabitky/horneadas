@@ -329,4 +329,20 @@ button[disabled] {
     font-size: 1.1em;
   }
 }
-.oculto { display: none !important; } 
+.oculto { display: none !important; }
+.main-nav a {
+  font-size: 1.6em;
+  padding: 0.7em 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-nav a svg {
+  display: block;
+  transition: stroke 0.3s;
+}
+.main-nav a.active svg,
+.main-nav a:active svg,
+.main-nav a:focus svg {
+  stroke: #66bb6a !important; /* Verde más claro para el activo */
+}
